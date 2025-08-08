@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Agent - AI Marketplace</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>AI Agent Marketplace</h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/browse">Browse Agents</a>
+                <a href="/submit" class="active">Submit Agent</a>
+            </nav>
+        </header>
+        
+        <main>
+            <div class="form-container">
+                <h2>Submit Your AI Agent</h2>
+                <p>Share your AI agent with the community. Fill out the form below to add your agent to our marketplace.</p>
+                
+                <form action="/submit" method="POST" class="agent-form">
+                    <input type="hidden" id="original_agent_id" name="original_agent_id" value="">
+                    
+                    <div class="form-group">
+                        <label for="name">Agent Name *</label>
+                        <input type="text" id="name" name="name" required placeholder="Enter the name of your AI agent">
+                        <small>Choose a clear, descriptive name for your agent</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="category">Category *</label>
+                        <select id="category" name="category" required>
+                            <option value="">Select a category</option>
+                            <option value="Productivity">Productivity</option>
+                            <option value="Content Creation">Content Creation</option>
+                            <option value="Data Analysis">Data Analysis</option>
+                            <option value="Customer Service">Customer Service</option>
+                            <option value="Development Tools">Development Tools</option>
+                            <option value="Marketing">Marketing</option>
+                            <option value="Education">Education</option>
+                            <option value="Entertainment">Entertainment</option>
+                            <option value="Healthcare">Healthcare</option>
+                            <option value="Finance">Finance</option>
+                            <option value="Other">Other</option>
+                        </select>
+                        <small>Select the category that best describes your agent</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="description">Description *</label>
+                        <textarea id="description" name="description" required rows="5" placeholder="Describe what your AI agent does, its capabilities, and how it can help users"></textarea>
+                        <small>Provide a detailed description of your agent's functionality and use cases</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="link">Agent Link *</label>
+                        <input type="url" id="link" name="link" required placeholder="https://example.com/your-agent">
+                        <small>Provide a link to your agent (website, GitHub repository, or demo)</small>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Submit Agent</button>
+                        <a href="/browse" class="btn btn-secondary">Cancel</a>
+                    </div>
+                </form>
+                
+                <div class="submission-guidelines">
+                    <h3>Submission Guidelines</h3>
+                    <ul>
+                        <li>Ensure your agent is functional and accessible</li>
+                        <li>Provide clear documentation or instructions</li>
+                        <li>Use appropriate categories for better discoverability</li>
+                        <li>Include contact information if users need support</li>
+                        <li>Respect intellectual property and licensing requirements</li>
+                    </ul>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Form validation and enhancement
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.querySelector('.agent-form');
+            const nameInput = document.getElementById('name');
+            const categorySelect = document.getElementById('category');
+            const descriptionTextarea = document.getElementById('description');
+            const linkInput = document.getElementById('link');
+            const originalAgentIdInput = document.getElementById('original_agent_id');
+            
+            // Check for URL parameters to pre-fill form (for forking)
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('fork') === 'true') {
+                // Pre-fill form with fork data
+                if (urlParams.get('name')) {
+                    nameInput.value = decodeURIComponent(urlParams.get('name'));
+                }
+                if (urlParams.get('description')) {
+                    descriptionTextarea.value = decodeURIComponent(urlParams.get('description'));
+                }
+                if (urlParams.get('category')) {
+                    categorySelect.value = decodeURIComponent(urlParams.get('category'));
+                }
+                if (urlParams.get('link')) {
+                    linkInput.value = decodeURIComponent(urlParams.get('link'));
+                }
+                if (urlParams.get('original_agent_id')) {
+                    originalAgentIdInput.value = urlParams.get('original_agent_id');
+                }
+                
+                // Update the page title to indicate this is a fork
+                document.querySelector('.form-container h2').textContent = 'Fork AI Agent';
+                document.querySelector('.form-container > p').textContent = 'You are creating a fork of an existing agent. Modify the details below and submit to create your own version.';
+            }
+
+            // Character counter for description
+            const maxDescriptionLength = 1000;
+            const counterElement = document.createElement('small');
+            counterElement.className = 'char-counter';
+            descriptionTextarea.parentNode.appendChild(counterElement);
+
+            function updateCharCounter() {
+                const remaining = maxDescriptionLength - descriptionTextarea.value.length;
+                counterElement.textContent = `${remaining} characters remaining`;
+                counterElement.style.color = remaining < 50 ? '#e74c3c' : '#666';
+            }
+
+            descriptionTextarea.addEventListener('input', updateCharCounter);
+            updateCharCounter();
+
+            // Form submission validation
+            form.addEventListener('submit', function(e) {
+                let hasErrors = false;
+                const errors = [];
+
+                // Validate name
+                if (nameInput.value.trim().length < 3) {
+                    errors.push('Agent name must be at least 3 characters long');
+                    hasErrors = true;
+                }
+
+                // Validate category
+                if (!categorySelect.value) {
+                    errors.push('Please select a category');
+                    hasErrors = true;
+                }
+
+                // Validate description
+                if (descriptionTextarea.value.trim().length < 20) {
+                    errors.push('Description must be at least 20 characters long');
+                    hasErrors = true;
+                }
+
+                // Validate URL
+                const urlPattern = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
+                if (!urlPattern.test(linkInput.value)) {
+                    errors.push('Please provide a valid URL');
+                    hasErrors = true;
+                }
+
+                if (hasErrors) {
+                    e.preventDefault();
+                    alert('Please fix the following errors:\n' + errors.join('\n'));
+                }
+            });
+
+            // Auto-format URL
+            linkInput.addEventListener('blur', function() {
+                let url = this.value.trim();
+                if (url && !url.startsWith('http://') && !url.startsWith('https://')) {
+                    this.value = 'https://' + url;
+                }
+            });
+        });
+    </script>
+</body>
+</html>

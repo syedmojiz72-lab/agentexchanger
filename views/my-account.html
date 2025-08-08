@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Account - Web3 AI Marketplace</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Web3 AI Marketplace</h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/browse">Browse Agents</a>
+                <a href="/submit">Submit Agent</a>
+                <a href="/my-account" class="active">My Account</a>
+                <div class="wallet-section">
+                    <button id="connectWallet" class="btn btn-wallet">Connect Wallet</button>
+                    <div id="walletInfo" class="wallet-info" style="display: none;">
+                        <span id="walletAddress"></span>
+                        <button id="logout" class="btn btn-sm">Logout</button>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        
+        <main>
+            <div class="account-container">
+                <div class="account-header">
+                    <h2>My Account</h2>
+                    <div id="userProfile" class="user-profile">
+                        <div id="connectPrompt" class="connect-prompt">
+                            <h3>Connect Your Wallet</h3>
+                            <p>Please connect your Web3 wallet to view your account dashboard.</p>
+                            <button id="connectWalletMain" class="btn btn-primary">Connect Wallet</button>
+                        </div>
+                        
+                        <div id="profileContent" class="profile-content" style="display: none;">
+                            <div class="profile-info">
+                                <h3>Profile Information</h3>
+                                <div class="info-item">
+                                    <label>Wallet Address:</label>
+                                    <span id="profileWallet"></span>
+                                </div>
+                                <div class="info-item">
+                                    <label>Subscription Tier:</label>
+                                    <span id="subscriptionTier">Creator (Free)</span>
+                                </div>
+                                <div class="info-item">
+                                    <label>Member Since:</label>
+                                    <span id="memberSince"></span>
+                                </div>
+                            </div>
+                            
+                            <div class="subscription-info">
+                                <h3>Subscription Tiers</h3>
+                                <div class="tier-grid">
+                                    <div class="tier-card current">
+                                        <h4>Creator (Free)</h4>
+                                        <p class="price">$0/month</p>
+                                        <ul>
+                                            <li>Submit unlimited agents</li>
+                                            <li>Fork and rate agents</li>
+                                            <li>Community access</li>
+                                        </ul>
+                                        <button class="btn btn-secondary" disabled>Current Plan</button>
+                                    </div>
+                                    
+                                    <div class="tier-card">
+                                        <h4>User Pro</h4>
+                                        <p class="price">$29/month</p>
+                                        <ul>
+                                            <li>Access to premium agents</li>
+                                            <li>Priority support</li>
+                                            <li>Advanced analytics</li>
+                                            <li>Custom agent categories</li>
+                                        </ul>
+                                        <button class="btn btn-primary">Upgrade (Coming Soon)</button>
+                                    </div>
+                                    
+                                    <div class="tier-card">
+                                        <h4>Agency</h4>
+                                        <p class="price">$199/month</p>
+                                        <ul>
+                                            <li>Team collaboration</li>
+                                            <li>White-label options</li>
+                                            <li>Enterprise support</li>
+                                            <li>Custom integrations</li>
+                                        </ul>
+                                        <button class="btn btn-primary">Upgrade (Coming Soon)</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="dashboard-stats" id="dashboardStats" style="display: none;">
+                    <h3>Your Stats</h3>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <h4 id="agentsCreated">0</h4>
+                            <p>Agents Created</p>
+                        </div>
+                        <div class="stat-card">
+                            <h4 id="agentsForked">0</h4>
+                            <p>Agents Forked</p>
+                        </div>
+                        <div class="stat-card">
+                            <h4 id="ratingsGiven">0</h4>
+                            <p>Ratings Given</p>
+                        </div>
+                        <div class="stat-card">
+                            <h4 id="totalForks">0</h4>
+                            <p>Total Forks Received</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="user-agents" id="userAgents" style="display: none;">
+                    <h3>My Agents</h3>
+                    <div id="agentsList" class="agents-list">
+                        <!-- Agents will be loaded here -->
+                    </div>
+                </div>
+                
+                <div class="user-forks" id="userForks" style="display: none;">
+                    <h3>My Forks</h3>
+                    <div id="forksList" class="agents-list">
+                        <!-- Forks will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <script src="/wallet.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const connectPrompt = document.getElementById('connectPrompt');
+            const profileContent = document.getElementById('profileContent');
+            const dashboardStats = document.getElementById('dashboardStats');
+            const userAgents = document.getElementById('userAgents');
+            const userForks = document.getElementById('userForks');
+            const connectWalletMain = document.getElementById('connectWalletMain');
+            
+            // Check wallet connection
+            const sessionId = localStorage.getItem('sessionId');
+            if (sessionId) {
+                loadUserProfile();
+            }
+            
+            // Connect wallet from main button
+            if (connectWalletMain) {
+                connectWalletMain.addEventListener('click', function() {
+                    document.getElementById('connectWallet').click();
+                });
+            }
+            
+            // Listen for wallet connection changes
+            window.addEventListener('storage', function(e) {
+                if (e.key === 'sessionId') {
+                    if (e.newValue) {
+                        loadUserProfile();
+                    } else {
+                        showConnectPrompt();
+                    }
+                }
+            });
+            
+            function showConnectPrompt() {
+                connectPrompt.style.display = 'block';
+                profileContent.style.display = 'none';
+                dashboardStats.style.display = 'none';
+                userAgents.style.display = 'none';
+                userForks.style.display = 'none';
+            }
+            
+            function loadUserProfile() {
+                const sessionId = localStorage.getItem('sessionId');
+                if (!sessionId) {
+                    showConnectPrompt();
+                    return;
+                }
+                
+                fetch('/api/profile', {
+                    headers: {
+                        'X-Session-Id': sessionId
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.wallet_address) {
+                        displayProfile(data);
+                        loadUserStats(data.wallet_address);
+                        loadUserAgents(data.wallet_address);
+                    } else {
+                        showConnectPrompt();
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading profile:', error);
+                    showConnectPrompt();
+                });
+            }
+            
+            function displayProfile(userData) {
+                connectPrompt.style.display = 'none';
+                profileContent.style.display = 'block';
+                dashboardStats.style.display = 'block';
+                userAgents.style.display = 'block';
+                userForks.style.display = 'block';
+                
+                document.getElementById('profileWallet').textContent = userData.wallet_address;
+                
+                if (userData.created_at) {
+                    const memberSince = new Date(userData.created_at).toLocaleDateString();
+                    document.getElementById('memberSince').textContent = memberSince;
+                }
+                
+                // Update subscription tier display
+                const tier = userData.subscription_tier || 'creator';
+                const tierDisplay = tier === 'creator' ? 'Creator (Free)' : 
+                                   tier === 'user_pro' ? 'User Pro ($29/month)' : 
+                                   'Agency ($199/month)';
+                document.getElementById('subscriptionTier').textContent = tierDisplay;
+            }
+            
+            function loadUserStats(walletAddress) {
+                // Mock stats for now - in production, fetch from API
+                document.getElementById('agentsCreated').textContent = '0';
+                document.getElementById('agentsForked').textContent = '0';
+                document.getElementById('ratingsGiven').textContent = '0';
+                document.getElementById('totalForks').textContent = '0';
+            }
+            
+            function loadUserAgents(walletAddress) {
+                // Mock data for now - in production, fetch user's agents
+                document.getElementById('agentsList').innerHTML = '<p>No agents created yet. <a href="/submit">Submit your first agent!</a></p>';
+                document.getElementById('forksList').innerHTML = '<p>No forks created yet. <a href="/browse">Browse agents to fork!</a></p>';
+            }
+        });
+    </script>
+</body>
+</html>

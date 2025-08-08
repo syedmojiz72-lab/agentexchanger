@@ -1,0 +1,73 @@
+Build a full-stack production-level AI Marketplace for Web3 using Node.js, Express, and SQLite (or PostgreSQL if needed).
+
+Core Purpose:
+A marketplace where creators and devs list, fork, remix, or subscribe to AI prompts, automations, bots, and agents customized for Web3 use cases.
+
+🚀 Key Features to Implement:
+
+1. **Landing + Navigation**
+   - Homepage with call-to-action, categories, and featured agents.
+   - Navigation: Browse Agents, Submit Agent, Login with Wallet, My Account.
+
+2. **Agent Listing + Detail View**
+   - `/browse`: Show all agents with name, description, rating, fork count, category, creator.
+   - `/agent/:id`: Full detail view with description, tags, rating, and fork button.
+
+3. **Submit Agent**
+   - Form to add a new agent: name, description, category, tags, link (optional), IPFS hash (optional).
+   - Save to database, associate with wallet address (from wallet login).
+
+4. **Fork & Remix Logic**
+   - Add "Fork" button to duplicate any agent’s data.
+   - Prefill form with cloned data.
+   - Allow editing before submission.
+   - Increment `fork_count` in database.
+
+5. **Wallet-Based Login**
+   - Use **WalletConnect** or similar.
+   - Store and associate agents, forks, ratings with wallet address.
+   - Show "My Agents" and "My Forks" for logged-in users.
+
+6. **Rating & Feedback System**
+   - Allow 1–5 star rating + comment per agent.
+   - Store per user/wallet.
+   - Show average rating on `/browse` and `/agent/:id`.
+
+7. **Community Stats**
+   - Track fork counts.
+   - Show trending agents (most forks or ratings).
+   - Add a leaderboard-style "Top Agents" section.
+
+8. **Subscription Tiers**
+   - Creator: Free to list.
+   - User Pro: $29/month access to premium agents.
+   - Agency: $199/month with team features.
+   - For MVP, fake the payment logic and just simulate access tier.
+
+9. **Decentralized Storage**
+   - Optionally upload prompts or automations to **IPFS**.
+   - Show IPFS hash/link on agent page.
+
+10. **Social Integration (Optional)**
+   - Support Lens and Farcaster handles (optional input when submitting).
+   - Show social proof if available.
+
+11. **Basic Styling**
+   - Clean layout using Bootstrap or TailwindCSS.
+   - Mobile responsive.
+
+📦 Tech Stack:
+- Backend: Node.js + Express
+- Database: SQLite or PostgreSQL
+- Wallet login: WalletConnect or similar
+- Optional: IPFS SDK, XMTP, Lens API integration
+- Hosting plan: Should work on Render.com free tier
+
+🛠 Bonus:
+- Store timestamps on all user actions (submit, fork, rate)
+- Enable search + filter on `/browse`
+
+This is for an MVP+ version of an actual product to be used by early Web3 builders.
+
+No need to over-engineer — just clean, working, modular code.
+

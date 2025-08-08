@@ -1,0 +1,616 @@
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f8f9fa;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header and Navigation */
+header {
+    background: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+    padding: 1rem 0;
+}
+
+header h1 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+nav {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+nav a {
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    color: #666;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+nav a:hover {
+    background-color: #e9ecef;
+    color: #2c3e50;
+}
+
+nav a.active {
+    background-color: #3498db;
+    color: white;
+}
+
+/* Main content */
+main {
+    flex: 1;
+    padding-bottom: 2rem;
+}
+
+/* Hero section */
+.hero {
+    text-align: center;
+    padding: 3rem 0;
+}
+
+.hero h2 {
+    font-size: 2.5rem;
+    color: #2c3e50;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.lead {
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 3rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.feature-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    text-align: left;
+}
+
+.feature-card h3 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+}
+
+.feature-card p {
+    color: #666;
+}
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: 600;
+    text-align: center;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.btn-primary {
+    background-color: #3498db;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    background-color: #95a5a6;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #7f8c8d;
+}
+
+.cta-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* Agents grid */
+.agents-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.agent-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.agent-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+}
+
+.agent-card h3 {
+    margin-bottom: 0.5rem;
+    color: #2c3e50;
+}
+
+.agent-card h3 a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.agent-card h3 a:hover {
+    color: #3498db;
+}
+
+.category {
+    color: #3498db;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.description {
+    color: #666;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.agent-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.agent-actions .btn {
+    flex: 1;
+    min-width: 120px;
+}
+
+/* Agent detail page */
+.agent-detail {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.agent-detail h2 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+    font-size: 2rem;
+}
+
+.agent-meta {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #e9ecef;
+    flex-wrap: wrap;
+}
+
+.agent-meta .category {
+    margin: 0;
+}
+
+.date {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.agent-description {
+    margin-bottom: 2rem;
+}
+
+.agent-description h3 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+}
+
+.agent-description p {
+    color: #666;
+    line-height: 1.8;
+    font-size: 1.1rem;
+}
+
+/* Form styles */
+.form-container {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.form-container h2 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+}
+
+.form-container > p {
+    color: #666;
+    margin-bottom: 2rem;
+}
+
+.agent-form {
+    margin-bottom: 2rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid #e9ecef;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #3498db;
+}
+
+.form-group small {
+    display: block;
+    margin-top: 0.25rem;
+    color: #666;
+    font-size: 0.85rem;
+}
+
+.char-counter {
+    color: #666 !important;
+    font-size: 0.8rem !important;
+}
+
+.form-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.form-actions .btn {
+    flex: 1;
+    min-width: 120px;
+}
+
+.submission-guidelines {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 10px;
+    border-left: 4px solid #3498db;
+}
+
+.submission-guidelines h3 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+}
+
+.submission-guidelines ul {
+    color: #666;
+    padding-left: 1.5rem;
+}
+
+.submission-guidelines li {
+    margin-bottom: 0.5rem;
+}
+
+/* Rating and Fork Stats */
+.agent-stats {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1rem 0;
+    padding: 0.5rem 0;
+    border-top: 1px solid #e9ecef;
+    font-size: 0.9rem;
+}
+
+.rating-display {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.fork-count {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    color: #666;
+}
+
+.fork-icon {
+    font-size: 0.8rem;
+}
+
+.star {
+    color: #ffd700;
+    font-size: 1rem;
+}
+
+.star.filled {
+    color: #ffd700;
+}
+
+.star.half {
+    background: linear-gradient(90deg, #ffd700 50%, #ddd 50%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.star.empty {
+    color: #ddd;
+}
+
+.rating-value {
+    font-weight: 600;
+    color: #666;
+    margin-left: 0.25rem;
+}
+
+.rating-text {
+    color: #666;
+    font-size: 0.85rem;
+}
+
+/* Interactive Rating */
+.rating-section {
+    margin: 2rem 0;
+    padding: 1.5rem;
+    background: #f8f9fa;
+    border-radius: 10px;
+    border-left: 4px solid #3498db;
+}
+
+.current-rating {
+    margin-bottom: 1.5rem;
+}
+
+.current-rating h3 {
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+}
+
+.rate-agent h4 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+
+.interactive-rating {
+    margin: 0.5rem 0;
+}
+
+.interactive-star {
+    font-size: 1.5rem;
+    color: #ddd;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-right: 0.25rem;
+    user-select: none;
+}
+
+.interactive-star:hover,
+.interactive-star.hover {
+    color: #ffd700;
+    transform: scale(1.1);
+}
+
+.interactive-star.selected {
+    color: #ffd700;
+}
+
+.rating-form {
+    max-width: 400px;
+}
+
+.rating-form .form-group {
+    margin-bottom: 1rem;
+}
+
+.rating-form textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+/* Agent Detail Updates */
+.agent-detail .agent-meta {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #e9ecef;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.agent-detail .agent-meta .fork-count {
+    font-weight: 600;
+}
+
+/* Empty state */
+.empty-state {
+    text-align: center;
+    padding: 3rem;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.empty-state p {
+    color: #666;
+    font-size: 1.1rem;
+}
+
+.empty-state a {
+    color: #3498db;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.empty-state a:hover {
+    text-decoration: underline;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 2rem 0;
+    color: #666;
+    border-top: 1px solid #e9ecef;
+    margin-top: auto;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 15px;
+    }
+
+    header h1 {
+        font-size: 1.5rem;
+    }
+
+    .hero h2 {
+        font-size: 2rem;
+    }
+
+    .feature-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .agents-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .agent-meta {
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: flex-start !important;
+    }
+
+    .agent-stats {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .rating-section {
+        padding: 1rem;
+    }
+
+    .interactive-star {
+        font-size: 1.2rem;
+    }
+
+    .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .cta-buttons .btn {
+        width: 100%;
+        max-width: 250px;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .agent-actions {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 480px) {
+    .form-container,
+    .agent-detail {
+        padding: 1rem;
+    }
+
+    .feature-card {
+        padding: 1.5rem;
+    }
+
+    .agent-card {
+        padding: 1rem;
+    }
+
+    .rating-section {
+        padding: 0.75rem;
+    }
+
+    .agent-stats {
+        font-size: 0.8rem;
+    }
+
+    .interactive-star {
+        font-size: 1rem;
+        margin-right: 0.15rem;
+    }
+}
